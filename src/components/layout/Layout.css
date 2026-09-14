@@ -1,0 +1,245 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.layout__cuerpo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.layout__topbar {
+  display: none;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 1rem;
+  background: #0f172a;
+  color: #e2e8f0;
+  position: sticky;
+  top: 0;
+  z-index: 900;
+}
+
+.layout__topbar-titulo {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.sidebar {
+  width: var(--sidebar-ancho);
+  flex-shrink: 0;
+  background: #0f172a;
+  color: #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0.75rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.sidebar__marca {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 0.35rem 0.35rem 1rem;
+  border-bottom: 1px solid #1e293b;
+  margin-bottom: 1rem;
+}
+
+.sidebar__logo {
+  display: block;
+  width: 100%;
+  max-height: 56px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.sidebar__titulo {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #94a3b8;
+  line-height: 1.3;
+}
+
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.sidebar__enlace {
+  color: #cbd5e1;
+  text-decoration: none;
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+.sidebar__enlace:hover {
+  background: #1e293b;
+  color: #fff;
+}
+
+.sidebar__enlace--activo {
+  background: var(--color-primario);
+  color: #fff;
+  font-weight: 600;
+}
+
+.sidebar__usuario {
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid #1e293b;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.sidebar__usuario-nombre {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+.sidebar__usuario-rol {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.sidebar__cerrar-sesion {
+  margin-top: 0.35rem;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #e2e8f0;
+}
+
+.layout__contenido {
+  flex: 1;
+  padding: 1.5rem 2rem;
+  min-width: 0;
+}
+
+.layout__sin-permiso {
+  flex: 1;
+  padding: 2rem;
+  max-width: 36rem;
+}
+
+.bottom-nav {
+  display: none;
+}
+
+.mas-sheet {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .layout__topbar {
+    display: flex;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .layout__contenido {
+    padding: 1rem;
+    padding-bottom: calc(4.75rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .bottom-nav {
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    justify-content: space-around;
+    padding: 0.35rem 0.35rem calc(0.35rem + env(safe-area-inset-bottom, 0px));
+    background: #0f172a;
+    border-top: 1px solid #1e293b;
+  }
+
+  .bottom-nav__item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    padding: 0.4rem 0.2rem;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    color: #94a3b8;
+    text-decoration: none;
+    font: inherit;
+    font-size: 0.68rem;
+    font-weight: 600;
+  }
+
+  .bottom-nav__item--activo {
+    color: #5eead4;
+    background: rgba(45, 212, 191, 0.12);
+  }
+
+  .mas-sheet {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+  }
+
+  .mas-sheet__fondo {
+    position: absolute;
+    inset: 0;
+    border: 0;
+    background: rgba(15, 23, 42, 0.5);
+  }
+
+  .mas-sheet__panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #0b1220;
+    color: #e2e8f0;
+    border-radius: 18px 18px 0 0;
+    padding: 1rem 1rem calc(1.25rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .mas-sheet__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+
+  .mas-sheet__tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 4.2rem;
+    padding: 0.5rem;
+    border: 1px solid #1e293b;
+    border-radius: 14px;
+    background: #111827;
+    color: #e2e8f0;
+    font: inherit;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-align: center;
+  }
+}
+
+@media (min-width: 901px) {
+  .bottom-nav,
+  .mas-sheet {
+    display: none !important;
+  }
+}
