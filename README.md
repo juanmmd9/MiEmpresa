@@ -1,20 +1,19 @@
 # MiEmpresa
 
-Portal multi-empresa de **mantenimiento** y **sistema de gestión de calidad**. Cada cliente (organización) tiene su marca, áreas y módulos; los datos no se mezclan.
+Portal multi-empresa de mantenimiento y sistema de gestión de calidad.
 
-Sitio comercial en `/`. El producto autenticado vive en `/app`.
+**No usa Vite ni npm.** El sitio es HTML, CSS y JavaScript estáticos en GitHub Pages. Los datos, el login y los archivos viven en Supabase.
 
-## Stack
+Sitio: https://juanmmd9.github.io/MiEmpresa/
 
-- React 19 + Vite + TypeScript
-- Supabase (Postgres, Auth, Storage, RLS, Edge Functions)
+## Qué hay que configurar
 
-## Arranque local
+### 1. Supabase (un proyecto nuevo, no el de EPI)
 
-1. Copia `.env.example` a `.env` y pega URL y anon key de un proyecto **nuevo** de Supabase (no uses el de EPI).
-2. En Supabase → SQL Editor, ejecuta [`supabase/schema.sql`](supabase/schema.sql).
+1. Crea el proyecto en [supabase.com](https://supabase.com).
+2. SQL Editor → pega y ejecuta [`supabase/schema.sql`](supabase/schema.sql).
 3. Authentication → Users → crea tu usuario plataforma (correo real).
-4. Inserta el perfil (cambia el UUID y el correo):
+4. Inserta el perfil (cambia UUID y correo):
 
 ```sql
 insert into usuarios_portal (id, organizacion_id, usuario, email, nombre, rol, activo)
@@ -29,36 +28,29 @@ values (
 );
 ```
 
-5. (Opcional) Despliega la función de alta de usuarios:
+5. En [`js/config.js`](js/config.js) pega `Project URL` y `anon public` (Project Settings → API). Esas claves son públicas a propósito: la seguridad está en RLS.
+6. (Opcional) Despliega la función de alta de usuarios desde el dashboard de Supabase → Edge Functions, carpeta [`supabase/functions/crear-usuario`](supabase/functions/crear-usuario).
 
-```bash
-npx supabase functions deploy crear-usuario
-```
+### 2. GitHub Pages
 
-6. Instala y corre:
+En el repo: **Settings → Pages → Source: GitHub Actions**. Cada push a `main` publica el sitio.
 
-```bash
-npm install
-npm run dev
-```
+También puedes elegir **Deploy from a branch → main → / (root)**.
 
-Abre http://localhost:5500
+## Cómo entra cada empresa
 
-## Cómo se acopla una empresa
+1. Tú entras con la cuenta plataforma (correo + contraseña, slug vacío).
+2. En **Empresas** das de alta el cliente (nombre + slug).
+3. El admin de esa empresa entra con **slug + usuario + contraseña**.
+4. En **Configuración** carga logo, áreas y enciende mantenimiento / calidad.
 
-1. Entra con la cuenta **plataforma**.
-2. En **Empresas** crea el cliente (nombre + slug) y, si la función está desplegada, el admin inicial.
-3. El admin entra en `/login` con **slug de empresa + usuario + contraseña**.
-4. En **Configuración** carga logo, color, áreas y enciende o apaga mantenimiento / calidad.
+## Ver el sitio en el PC
 
-El email interno de Auth es `{usuario}@{slug}.miempresa.local`. El personal no lo ve; escribe solo su usuario.
+No hay `npm run dev`. Opciones:
 
-## Módulos actuales
-
-- Mantenimiento: inicio por áreas, hojas de vida, preventivo, aprobación PM, cronograma, solicitudes, correctivo, indicadores.
-- Calidad: no conformidades, acciones de mejora, gestión del cambio.
-
-Siguientes (tipo Kawak): gestión documental, auditorías, riesgos, proveedores, PQRS.
+- Abre la URL de GitHub Pages.
+- En VS Code, extensión Live Server sobre `index.html`.
+- O, si tienes Python: `python -m http.server` en esta carpeta.
 
 ## Repo
 
