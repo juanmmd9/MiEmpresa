@@ -2,7 +2,7 @@
 
 Portal multi-empresa de mantenimiento y sistema de gestión de calidad.
 
-**No usa Vite ni npm.** El sitio es HTML, CSS y JavaScript estáticos en GitHub Pages. Los datos, el login y los archivos viven en Supabase.
+Stack: **React 19 + Vite + TypeScript** en el navegador, **Supabase** para datos, login y archivos, y **GitHub Pages** para publicar el sitio.
 
 Sitio: https://juanmmd9.github.io/MiEmpresa/
 
@@ -28,14 +28,12 @@ values (
 );
 ```
 
-5. En [`js/config.js`](js/config.js) pega `Project URL` y `anon public` (Project Settings → API). Esas claves son públicas a propósito: la seguridad está en RLS.
+5. El proyecto ya apunta a `https://rxlnfhigklyiajrmkzoe.supabase.co`. En [`src/config.ts`](src/config.ts) pega la **anon public** (Project Settings → API). Esa clave es pública a propósito: la seguridad está en RLS.
 6. (Opcional) Despliega la función de alta de usuarios desde el dashboard de Supabase → Edge Functions, carpeta [`supabase/functions/crear-usuario`](supabase/functions/crear-usuario).
 
 ### 2. GitHub Pages
 
-En el repo: **Settings → Pages → Source: GitHub Actions**. Cada push a `main` publica el sitio.
-
-También puedes elegir **Deploy from a branch → main → / (root)**.
+En el repo: **Settings → Pages → Source: GitHub Actions**. Cada push a `main` construye React (`npm run build` con `GITHUB_PAGES=true`) y publica `dist`.
 
 ## Cómo entra cada empresa
 
@@ -46,11 +44,12 @@ También puedes elegir **Deploy from a branch → main → / (root)**.
 
 ## Ver el sitio en el PC
 
-No hay `npm run dev`. Opciones:
+```bash
+npm install
+npm run dev
+```
 
-- Abre la URL de GitHub Pages.
-- En VS Code, extensión Live Server sobre `index.html`.
-- O, si tienes Python: `python -m http.server` en esta carpeta.
+Abre http://localhost:5500/ (Vite). El login no funciona hasta pegar las claves en `src/config.ts` y ejecutar el SQL en Supabase.
 
 ## Repo
 
